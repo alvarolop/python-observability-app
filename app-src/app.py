@@ -36,6 +36,16 @@ def error():
     logging.error('An error occurred!')
     raise Exception('Oops, an error occurred!')
 
+@app.route('/live')
+def live():
+    return 'Live and responsive!', 200
+
+@app.route('/ready')
+def ready():
+    # Add readiness checks here (e.g., database connections, external services)
+    # Return 200 if the app is ready, otherwise return a non-200 status code
+    return 'Ready to accept requests!', 200
+
 if __name__ == '__main__':
     # Start the Prometheus HTTP server to expose metrics
     start_http_server(8000)
