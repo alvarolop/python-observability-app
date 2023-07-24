@@ -15,11 +15,8 @@ USER 1001
 RUN pip install -U "pip>=19.3.1" && \
     pip install --no-cache-dir -r requirements.txt
 
-# Expose the port where the Flask app will run
-EXPOSE 5000
-
-# Expose the port where Prometheus will scrape metrics
-EXPOSE 8000
+# Expose the port where Prometheus will scrape metrics together with the Flask app
+EXPOSE 8080
 
 # Run the Flask app and expose Prometheus metrics on container start
 CMD ["python", "app.py"]

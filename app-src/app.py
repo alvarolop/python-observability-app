@@ -1,6 +1,7 @@
 import sys
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from prometheus_client import Counter, Gauge, Histogram, Summary
-from prometheus_client.exposition import start_http_server
+from prometheus_client import make_wsgi_app
 import random
 import time
 import logging
@@ -46,9 +47,11 @@ def ready():
     # Return 200 if the app is ready, otherwise return a non-200 status code
     return 'Ready to accept requests!', 200
 
-if __name__ == '__main__':
-    # Start the Prometheus HTTP server to expose metrics
-    start_http_server(8000)
-    
-    # Start the Flask app on port 5000
-    app.run(port=5000)
+# Add prometheus wsgi middleware to route /metrics requests
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
+    '/metrics': make_wsgi_app()
+})
+
+if __name__ == '__main__':  
+    # Start the Flask app on port 5000 together with Prometheus HTTP server to expose metrics
+    app.run(port=8080)
