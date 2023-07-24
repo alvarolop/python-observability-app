@@ -110,8 +110,8 @@ podman push quay.io/alopezme/python-observability-app:latest
 
 == License
 
-This project is licensed under the GNU General Public License (GPL) version 3.0 - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the GNU General Public License (GPL) version 3.0 - see the link:./LICENSE[LICENSE] file for details.
 
 Feel free to explore and modify the app as needed. If you have any questions or suggestions, please open an issue or submit a pull request!
 
-Let's keep monitoring and improving together! :chart_with_upwards_trend:
+Let's keep monitoring and improving together! 
