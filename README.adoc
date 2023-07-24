@@ -1,0 +1,117 @@
+= Python Observability App
+Álvaro López Medina <alopezme@redhat.com>
+v1.0, 2023-07
+// Metadata
+:description: This is just an example app that tries to showcase the same features as the main repo: `quarkus-observability-app`
+:keywords: openshift, Python, logging, metrics, tracing, red hat
+// Create TOC wherever needed
+:toc: macro
+:sectanchors:
+:sectnumlevels: 3
+:sectnums: 
+:source-highlighter: pygments
+:imagesdir: docs/images
+// Start: Enable admonition icons
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+// Icons for GitHub
+:yes: :heavy_check_mark:
+:no: :x:
+endif::[]
+ifndef::env-github[]
+:icons: font
+// Icons not for GitHub
+:yes: icon:check[]
+:no: icon:times[]
+endif::[]
+
+// Create the Table of contents here
+toc::[]
+
+
+== Introduction
+
+This is just an example app that tries to showcase the same features as the main repo: `quarkus-observability-app`.
+
+ERROR: Please, go to the main repository to get how to configure all the Observability components for Openshift: https://github.com/alvarolop/quarkus-observability-app
+
+This example creates a simple Flask app with two endpoints: '/' and '/error'. The '/' endpoint simply returns "Hello, Prometheus!" and adds a random delay between 0 and 0.5 seconds to simulate some processing time. The '/error' endpoint raises an exception to simulate an error scenario.
+
+
+
+
+=== Endpoints
+
+* `/`: This endpoint returns "Hello, Prometheus!" and simulates some processing time. It is instrumented with Prometheus metrics.
+* `/error`: This endpoint raises an exception to simulate an error scenario and is also instrumented with Prometheus metrics.
+
+=== Accessing Prometheus Metrics
+
+The Prometheus metrics endpoint is accessible at `http://localhost:8000/metrics` when the application is running. Prometheus can scrape and store these metrics for monitoring purposes.
+
+We define several Prometheus metrics: REQUEST_COUNTER, REQUEST_DURATION, ERROR_COUNTER, and CURRENT_REQUESTS. When a request is made to the '/' endpoint, the REQUEST_COUNTER is incremented, and the REQUEST_DURATION measures the time taken to process the request. When the '/error' endpoint is accessed, the ERROR_COUNTER is incremented. The CURRENT_REQUESTS metric is a gauge that represents the number of active requests at any given time.
+
+
+
+
+== Run it! Locally
+
+Install the required Python dependencies using pip:
+
+[source, bash]
+----
+pip install -r requirements.txt
+----
+
+To run the Python app with Prometheus metrics, use the following command:
+
+[source, bash]
+----
+python app.py
+----
+
+This will start the Flask app on port 5000, and Prometheus metrics will be available on port 8000.
+
+
+
+== Run it! Podman
+
+You can also run the application using Docker. Build the Docker image with the following command:
+
+[source, bash]
+----
+podman build -t quay.io/alopezme/python-observability-app:latest .
+----
+
+Replace `my-python-app` with the desired name for your Docker image.
+
+To start the app as a container, use the following command:
+
+[source, bash]
+----
+podman run -p 5000:5000 -p 8000:8000 --net=host quay.io/alopezme/python-observability-app:latest
+----
+
+
+== Run it! Openshift
+
+You can also push this image to a container registry and later use it from Openshift:
+
+[source, bash]
+----
+podman push quay.io/alopezme/python-observability-app:latest
+----
+
+
+
+== License
+
+This project is licensed under the GNU General Public License (GPL) version 3.0 - see the [LICENSE](./LICENSE) file for details.
+
+Feel free to explore and modify the app as needed. If you have any questions or suggestions, please open an issue or submit a pull request!
+
+Let's keep monitoring and improving together! :chart_with_upwards_trend:
