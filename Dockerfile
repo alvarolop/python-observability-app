@@ -6,10 +6,8 @@ WORKDIR /app
 
 # Add application sources with correct permissions for OpenShift
 USER 0
+COPY app-src/ ./
 RUN chown -R 1001:0 ./
-
-# Copy the Python app and requirements file to the container
-COPY app.py requirements.txt ./
 
 USER 1001
 
