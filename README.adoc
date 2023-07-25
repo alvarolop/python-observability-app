@@ -93,7 +93,7 @@ To start the app as a container, use the following command:
 
 [source, bash]
 ----
-podman run --net=host quay.io/alopezme/python-observability-app:latest
+podman run -p 8080:8080 quay.io/alopezme/python-observability-app:latest
 ----
 
 
