@@ -111,6 +111,8 @@ Deploy the app on Openshift:
 [source, bash]
 ----
 oc process -f openshift/app.yaml | oc apply -f -
+oc process -f openshift/service-monitor.yaml | oc apply -f -
+
 ----
 
 
