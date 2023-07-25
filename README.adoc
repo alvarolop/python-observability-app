@@ -37,7 +37,7 @@ toc::[]
 
 This is just an example app that tries to showcase the same features as the main repo: `quarkus-observability-app`.
 
-ERROR: Please, go to the main repository to get how to configure all the Observability components for Openshift: https://github.com/alvarolop/quarkus-observability-app
+WARNING: Please, go to the main repository to get how to configure all the Observability components for Openshift: https://github.com/alvarolop/quarkus-observability-app
 
 This example creates a simple Flask app with two endpoints: '/' and '/error'. The '/' endpoint simply returns "Hello, Prometheus!" and adds a random delay between 0 and 0.5 seconds to simulate some processing time. The '/error' endpoint raises an exception to simulate an error scenario.
 
