@@ -11,9 +11,11 @@ app = Flask(__name__)
 
 # Prometheus metrics
 REQUEST_COUNTER = Counter('app_requests_total', 'Total number of requests made')
+APP_HELLO_COUNTER = Counter('app_hello_counter_total', 'Total requests made to hello endpoint')
 REQUEST_DURATION = Summary('app_request_duration_seconds', 'Request duration in seconds')
 ERROR_COUNTER = Counter('app_errors_total', 'Total number of errors')
 CURRENT_REQUESTS = Gauge('app_current_requests', 'Current number of active requests')
+
 
 # Configure logging to send logs to stdout
 logging.basicConfig(
@@ -25,13 +27,15 @@ logging.basicConfig(
 @app.route('/')
 def web_interface():
     total_requests = REQUEST_COUNTER._value.get()
+    total_hellos = APP_HELLO_COUNTER._value.get()
     total_errors = ERROR_COUNTER._value.get()
-    return render_template('index.html', total_requests=total_requests, total_errors=total_errors)
+    return render_template('index.html', total_requests=total_requests, total_hellos=total_hellos, total_errors=total_errors)
 
-@app.route('/test')
+@app.route('/hello')
 @REQUEST_DURATION.time()
 def hello():
     REQUEST_COUNTER.inc()
+    APP_HELLO_COUNTER.inc()
     time.sleep(random.uniform(0, 0.5))  # Simulate some processing time
     logging.info('A good request occurred!')
 
@@ -39,6 +43,7 @@ def hello():
 
 @app.route('/error')
 def error():
+    REQUEST_COUNTER.inc()
     ERROR_COUNTER.inc()
     logging.error('An error occurred!')
     raise Exception('Oops, an error occurred!')

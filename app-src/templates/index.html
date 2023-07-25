@@ -99,6 +99,7 @@
         <div class="metrics">
             <h2>Basic Metrics</h2>
             <p>Total Requests: {{ total_requests }}</p>
+            <p>Total Hellos: {{ total_hellos }}</p>
             <p>Total Errors: {{ total_errors }}</p>
         </div>
 
@@ -110,7 +111,7 @@
                     <th>Description</th>
                 </tr>
                 <tr>
-                    <td><button class="endpoint-button" onclick="window.location.href = '/test';">/test</button></td>
+                    <td><button class="endpoint-button" onclick="window.location.href = '/hello';">/hello</button></td>
                     <td>Endpoint that returns "Hello, Prometheus!"</td>
                 </tr>
                 <tr>
