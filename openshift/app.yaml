@@ -31,7 +31,7 @@ objects:
                   protocol: TCP
               livenessProbe:
                 httpGet:
-                  path: /live
+                  path: /health/live
                   port: 8080
                   scheme: HTTP
                 timeoutSeconds: 1
@@ -40,7 +40,7 @@ objects:
                 failureThreshold: 3
               readinessProbe:
                 httpGet:
-                  path: /ready
+                  path: /health/ready
                   port: 8080
                   scheme: HTTP
                 timeoutSeconds: 1
