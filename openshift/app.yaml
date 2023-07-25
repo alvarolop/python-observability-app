@@ -10,7 +10,7 @@ objects:
       labels:
         app: ${APP_NAME}
         app.kubernetes.io/name: ${APP_NAME}
-        app.openshift.io/runtime: quarkus
+        app.openshift.io/runtime: python
     spec:
       replicas: 1
       selector:
@@ -24,14 +24,14 @@ objects:
         spec:
           containers:
             - name: ${APP_NAME}
-              image: quay.io/alopezme/quarkus-observability-app:latest-micro
+              image: quay.io/alopezme/python-observability-app:latest
               imagePullPolicy: Always
               ports:
                 - containerPort: 8080
                   protocol: TCP
               livenessProbe:
                 httpGet:
-                  path: /q/health/live
+                  path: /live
                   port: 8080
                   scheme: HTTP
                 timeoutSeconds: 1
@@ -40,7 +40,7 @@ objects:
                 failureThreshold: 3
               readinessProbe:
                 httpGet:
-                  path: /q/health/ready
+                  path: /ready
                   port: 8080
                   scheme: HTTP
                 timeoutSeconds: 1
@@ -49,8 +49,8 @@ objects:
                 failureThreshold: 3
               resources:
                 limits:
-                  cpu: 300m
-                  memory: 200Mi
+                  cpu: 1
+                  memory: 500Mi
                 requests:
                   cpu: 100m
                   memory: 50Mi
