@@ -1,11 +1,11 @@
 import sys
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
-from prometheus_client import Counter, Gauge, Histogram, Summary
+from prometheus_client import Counter, Gauge, Histogram, Summary, multiprocess, generate_latest
 from prometheus_client import make_wsgi_app
 import random
 import time
 import logging
-from flask import Flask
+from flask import Flask, Response, render_template
 
 app = Flask(__name__)
 
@@ -23,6 +23,12 @@ logging.basicConfig(
 )
 
 @app.route('/')
+def web_interface():
+    total_requests = REQUEST_COUNTER._value.get()
+    total_errors = ERROR_COUNTER._value.get()
+    return render_template('index.html', total_requests=total_requests, total_errors=total_errors)
+
+@app.route('/test')
 @REQUEST_DURATION.time()
 def hello():
     REQUEST_COUNTER.inc()
@@ -37,11 +43,11 @@ def error():
     logging.error('An error occurred!')
     raise Exception('Oops, an error occurred!')
 
-@app.route('/live')
+@app.route('/health/live')
 def live():
     return 'Live and responsive!', 200
 
-@app.route('/ready')
+@app.route('/health/ready')
 def ready():
     # Add readiness checks here (e.g., database connections, external services)
     # Return 200 if the app is ready, otherwise return a non-200 status code
@@ -54,4 +60,4 @@ app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
 
 if __name__ == '__main__':  
     # Start the Flask app on port 5000 together with Prometheus HTTP server to expose metrics
-    app.run(port=8080)
+    app.run(host='0.0.0.0', port=8080)
