@@ -64,14 +64,14 @@ Install the required Python dependencies using pip:
 
 [source, bash]
 ----
-pip install -r requirements.txt
+pip install -r app-src/requirements.txt
 ----
 
 To run the Python app with Prometheus metrics, use the following command:
 
 [source, bash]
 ----
-python app.py
+python app-src/app.py
 ----
 
 This will start the Flask app on port 5000, and Prometheus metrics will be available on port 8000.
@@ -93,7 +93,7 @@ To start the app as a container, use the following command:
 
 [source, bash]
 ----
-podman run -p 5000:5000 -p 8000:8000 --net=host quay.io/alopezme/python-observability-app:latest
+podman run --net=host quay.io/alopezme/python-observability-app:latest
 ----
 
 
