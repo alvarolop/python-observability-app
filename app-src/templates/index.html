@@ -4,7 +4,7 @@
     <title>My App Metrics and Endpoints</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
             margin: 40px;
             background-color: #f0f0f0;
@@ -68,27 +68,42 @@
             background-color: #f0f0f0;
         }
 
-        /* Button style for endpoints */
+        /* Updated button style for endpoints */
         .endpoint-button {
-            padding: 10px;
-            border-radius: 4px;
+            padding: 12px 20px;
+            border-radius: 6px;
             background-color: #007bff;
             color: #fff;
             text-align: left; /* Align the text to the left */
             cursor: pointer;
-            max-width: 150px; /* Set the maximum width for the button */
-            min-width: 100px; /* Set the minimum width for the button */
+            max-width: 180px; /* Set the maximum width for the button */
+            min-width: 120px; /* Set the minimum width for the button */
             white-space: nowrap; /* Prevent text wrapping within the button */
             overflow: hidden; /* Hide any overflowing text */
             text-overflow: ellipsis; /* Display ellipsis for truncated text */
-            padding-left: 10px; /* Add left padding */
+            font-size: 16px; /* Adjust font size */
             font-weight: bold; /* Add bold text to the button */
+            border: none; /* Remove border */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add subtle box shadow */
+            transition: background-color 0.3s ease; /* Add smooth transition */
+        }
 
+        /* Hover style for buttons */
+        .endpoint-button:hover {
+            background-color: #0056b3; /* Change background color on hover */
+            transform: translateY(-2px); /* Add a subtle lift effect */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Adjust box shadow on hover */
         }
 
         /* Active button style */
         .endpoint-button.active {
             background-color: #0056b3;
+        }
+
+        /* Monospaced font for the second column */
+        .monospaced-column {
+            font-family: "Courier New", monospace;
+            word-break: break-word;
         }
     </style>
 </head>
@@ -108,26 +123,32 @@
             <table class="endpoint-table">
                 <tr>
                     <th>Endpoint</th>
+                    <th>Path</th>
                     <th>Description</th>
                 </tr>
                 <tr>
-                    <td><button class="endpoint-button" onclick="window.location.href = '/hello';">/hello</button></td>
+                    <td><button class="endpoint-button" onclick="window.location.href = '/hello';">Hello</button></td>
+                    <td class="monospaced-column">/hello</td>
                     <td>Endpoint that returns "Hello, Prometheus!"</td>
                 </tr>
                 <tr>
-                    <td><button class="endpoint-button" onclick="window.location.href = '/error';">/error</button></td>
+                    <td><button class="endpoint-button" onclick="window.location.href = '/error';">Error</button></td>
+                    <td class="monospaced-column">/error</td>
                     <td>Endpoint that raises an error to simulate an error scenario</td>
                 </tr>
                 <tr>
-                    <td><button class="endpoint-button" onclick="window.location.href = '/health/live';">/health/live</button></td>
+                    <td><button class="endpoint-button" onclick="window.location.href = '/health/live';">Liveness</button></td>
+                    <td class="monospaced-column">/health/live</td>
                     <td>Endpoint that returns "Live and responsive!"</td>
                 </tr>
                 <tr>
-                    <td><button class="endpoint-button" onclick="window.location.href = '/health/ready';">/health/ready</button></td>
+                    <td><button class="endpoint-button" onclick="window.location.href = '/health/ready';">Readiness</button></td>
+                    <td class="monospaced-column">/health/ready</td>
                     <td>Endpoint that returns "Ready to accept requests!"</td>
                 </tr>
                 <tr>
-                    <td><button class="endpoint-button" onclick="window.location.href = '/metrics';">/metrics</button></td>
+                    <td><button class="endpoint-button" onclick="window.location.href = '/metrics';">Metrics</button></td>
+                    <td class="monospaced-column">/metrics</td>
                     <td>Endpoint that exposes Prometheus metrics</td>
                 </tr>
             </table>
@@ -146,7 +167,7 @@
             .then(response => response.text())
             .then(data => {
                 const metricsDiv = document.querySelector('.metrics-raw');
-                metricsDiv.innerHTML = '<h2>Metrics</h2><pre>' + data + '</pre>';
+                metricsDiv.innerHTML = '<h2>Metrics Prometheus</h2><pre>' + data + '</pre>';
             });
         }
 
