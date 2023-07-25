@@ -1,4 +1,5 @@
 import sys
+import os
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from prometheus_client import Counter, Gauge, Histogram, Summary, multiprocess, generate_latest
 from prometheus_client import make_wsgi_app
@@ -39,7 +40,8 @@ def hello():
     time.sleep(random.uniform(0, 0.5))  # Simulate some processing time
     logging.info('A good request occurred!')
 
-    return 'Hello, Prometheus!'
+    name = os.environ.get('GREETINGS_NAME', 'Python Observability App')
+    return f'Hello, {name}!'
 
 @app.route('/error')
 def error():

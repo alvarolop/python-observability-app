@@ -29,6 +29,9 @@ objects:
               ports:
                 - containerPort: 8080
                   protocol: TCP
+              env:
+                - name: GREETINGS_NAME
+                  value: Alvaro
               livenessProbe:
                 httpGet:
                   path: /health/live
