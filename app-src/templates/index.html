@@ -1,12 +1,163 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Web Interface</title>
+    <title>My App Metrics and Endpoints</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 40px;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #007bff;
+        }
+        h2 {
+            margin-top: 40px;
+        }
+        .metrics {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+        }
+        .metrics-raw {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+        }
+        .endpoint {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .endpoint h3 {
+            color: #007bff;
+        }
+        .endpoint p {
+            margin: 0;
+        }
+        /* Table layout */
+        .endpoint-table {
+            width: 100%;
+        }
+
+        .endpoint-table th {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .endpoint-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* Active row style */
+        .endpoint-table tr.active {
+            background-color: #f0f0f0;
+        }
+
+        /* Button style for endpoints */
+        .endpoint-button {
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: left; /* Align the text to the left */
+            cursor: pointer;
+            max-width: 150px; /* Set the maximum width for the button */
+            min-width: 100px; /* Set the minimum width for the button */
+            white-space: nowrap; /* Prevent text wrapping within the button */
+            overflow: hidden; /* Hide any overflowing text */
+            text-overflow: ellipsis; /* Display ellipsis for truncated text */
+            padding-left: 10px; /* Add left padding */
+            font-weight: bold; /* Add bold text to the button */
+
+        }
+
+        /* Active button style */
+        .endpoint-button.active {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, Prometheus Web Interface!</h1>
-    <p>Total Requests: {{ total_requests }}</p>
-    <p>Total Errors: {{ total_errors }}</p>
+    <div class="container">
+        <h1>Python Observability App</h1>
+
+        <div class="metrics">
+            <h2>Basic Metrics</h2>
+            <p>Total Requests: {{ total_requests }}</p>
+            <p>Total Errors: {{ total_errors }}</p>
+        </div>
+
+        <div class="endpoints">
+            <h2>Endpoints</h2>
+            <table class="endpoint-table">
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><button class="endpoint-button" onclick="window.location.href = '/test';">/test</button></td>
+                    <td>Endpoint that returns "Hello, Prometheus!"</td>
+                </tr>
+                <tr>
+                    <td><button class="endpoint-button" onclick="window.location.href = '/error';">/error</button></td>
+                    <td>Endpoint that raises an error to simulate an error scenario</td>
+                </tr>
+                <tr>
+                    <td><button class="endpoint-button" onclick="window.location.href = '/health/live';">/health/live</button></td>
+                    <td>Endpoint that returns "Live and responsive!"</td>
+                </tr>
+                <tr>
+                    <td><button class="endpoint-button" onclick="window.location.href = '/health/ready';">/health/ready</button></td>
+                    <td>Endpoint that returns "Ready to accept requests!"</td>
+                </tr>
+                <tr>
+                    <td><button class="endpoint-button" onclick="window.location.href = '/metrics';">/metrics</button></td>
+                    <td>Endpoint that exposes Prometheus metrics</td>
+                </tr>
+            </table>
+        </div>
+
+    <div class="container">
+        <div class="metrics-raw">
+            <h2>Metrics Prometheus</h2>
+        </div>
+    </div>
+
+    <!-- JavaScript to fetch and display metrics -->
+    <script>
+        function updateMetrics() {
+            fetch('/metrics')
+            .then(response => response.text())
+            .then(data => {
+                const metricsDiv = document.querySelector('.metrics-raw');
+                metricsDiv.innerHTML = '<h2>Metrics</h2><pre>' + data + '</pre>';
+            });
+        }
+
+        // Initial update
+        updateMetrics();
+
+    </script>
 </body>
 </html>
+
+
+
+
+
+
