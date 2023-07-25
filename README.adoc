@@ -112,8 +112,9 @@ Deploy the app on Openshift:
 ----
 oc process -f openshift/app.yaml | oc apply -f -
 oc process -f openshift/service-monitor.yaml | oc apply -f -
-
 ----
+
+NOTE: If you face issues creating and configuring the Service monitor, you can use this https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/troubleshooting.md[Thoubleshooting guide].
 
 
 == License
